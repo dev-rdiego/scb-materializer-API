@@ -54,7 +54,6 @@ router.put('/:id', async (req, res) => {
         const updatedItem = await Item.findOneAndUpdate(
             { id: itemId },
             { name, is_primitive, cost },
-            { new: true }
         );
 
         if (!updatedItem) {
@@ -63,6 +62,31 @@ router.put('/:id', async (req, res) => {
         }
 
         res.status(200).json({ message: 'Item updated successfully', item: updatedItem });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Internal Server Error' });
+    }
+});
+
+// PATCH: Update specific fields of an item by ID
+router.patch('/:id', async (req, res) => {
+    try {
+        const itemId = req.params.id;
+        const updates = req.body;
+
+        const updatedItem = await Item.findOneAndUpdate(
+            { id: itemId },
+            { $set: updates },
+            { new: true }
+        );
+
+        if (!updatedItem) {
+            res.status(404).json({ message: 'Item not found' });
+            return;
+        }
+
+        const transformedItem = itemDto.transformItem(updatedItem);
+        res.status(200).json({ message: 'Item updated successfully', item: transformedItem });
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Internal Server Error' });
