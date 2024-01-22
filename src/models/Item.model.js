@@ -24,4 +24,21 @@ const itemSchema = new Schema({
     cost: [costSchema]
 });
 
+// Omit _id and __v when converting to JSON
+costSchema.set('toJSON', {
+    transform: function (doc, ret) {
+        delete ret._id;
+        delete ret.__v;
+        return ret;
+    }
+});
+
+itemSchema.set('toJSON', {
+    transform: function (doc, ret) {
+        delete ret._id;
+        delete ret.__v;
+        return ret;
+    }
+});
+
 module.exports = mongoose.model('Item', itemSchema);
