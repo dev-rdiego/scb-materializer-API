@@ -2,12 +2,14 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+const db = require("./config/db.config");
 
 var indexRouter = require('./routes/index.routes');
 var usersRouter = require('./routes/users.routes');
 var itemsRouter = require('./routes/items.routes');
 
 var app = express();
+db.connect();
 
 const baseApi = '/api/v1';
 
