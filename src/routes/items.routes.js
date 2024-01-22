@@ -122,6 +122,12 @@ router.patch('/:id', async (req, res) => {
         const itemId = req.params.id;
         const updates = req.body;
 
+        // Check if the updates object is empty
+        if (Object.keys(updates).length === 0) {
+            res.status(400).json({ message: 'Item not updated due to empty params' });
+            return;
+        }
+
         // Find item by ID and update it with the provided fields
         const updatedItem = await Item.findOneAndUpdate(
             { id: itemId },
