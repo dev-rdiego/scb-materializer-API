@@ -1,8 +1,11 @@
+// Import the necessary modules
 const Item = require('../models/Item.model');
 const { calculateTotalCost } = require('../utils');
 
+// Define the controller object
 const controller = {};
 
+// Controller function to get the total cost of a single item
 controller.getTotalCost = async (req, res) => {
     try {
         const itemId = req.params.id;
@@ -16,13 +19,14 @@ controller.getTotalCost = async (req, res) => {
             return;
         }
 
-        // Calculate total cost recursively and await the result
-        const totalCost = await calculateTotalCost(item.id, [], desiredAmount);
+        // Calculate total cost and time recursively and await the result
+        const { totalCost, totalTime } = await calculateTotalCost(item.id, [], desiredAmount);
 
-        // Send response with total cost
+        // Send response with total cost and time
         res.status(200).json({
             name: item.name,
-            rawMaterials: totalCost
+            rawMaterials: totalCost,
+            production_time: totalTime
         });
     } catch (error) {
         console.error(error);
@@ -30,6 +34,7 @@ controller.getTotalCost = async (req, res) => {
     }
 };
 
+// Controller function to get the total cost of multiple items
 controller.getManyTotalCost = async (req, res) => {
     try {
         const itemsArray = req.body; // Assuming the array is in the request body
@@ -52,21 +57,23 @@ controller.getManyTotalCost = async (req, res) => {
                 return;
             }
 
-            const totalCost = await calculateTotalCost(itemId, [], requestedAmount);
+            // Calculate total cost and time recursively and await the result
+            const { totalCost, totalTime } = await calculateTotalCost(itemId, [], requestedAmount);
 
             totalCosts.push({
                 name: itemDetails.name,
-                rawMaterials: totalCost
+                rawMaterials: totalCost,
+                production_time: totalTime
             });
         }
 
+        // Send response with total cost and time for each item
         res.status(200).json(totalCosts);
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Internal Server Error' });
     }
-}
+};
 
-
-
+// Export the controller object
 module.exports = controller;

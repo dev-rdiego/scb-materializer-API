@@ -25,8 +25,7 @@ controller.searchByNameOrGetAll = async (req, res) => {
 
         res.status(200).json(items);
     } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: 'Internal Server Error' });
+        res.status(500).json({ message: error._message });
     }
 }
 
@@ -44,30 +43,28 @@ controller.getOneByID = async (req, res) => {
 
         res.status(200).json(item);
     } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: 'Internal Server Error' });
+        res.status(500).json({ message: error._message });
     }
 };
 
 // Add a new item
 controller.addNew = async (req, res) => {
     try {
-        const { id, name, is_primitive, cost } = req.body;
+        const { id, name, is_primitive, cost, production_time } = req.body;
 
         // Check if the provided id already exists
         const existingItem = await Item.findOne({ id });
 
         // If item with the same id already exists, return an error
-        if (existingItem) return res.status(400).json({ message: 'Item with the same ID already exists' });
+        if (existingItem) return res.status(409).json({ message: 'Item with the same ID already exists' });
 
         // Create a new item using the Item model and save it to the database
-        const newItem = new Item({ id, name, is_primitive, cost });
+        const newItem = new Item({ id, name, is_primitive, cost, production_time });
         await newItem.save();
 
         res.status(201).json({ message: 'Item added successfully', item: newItem });
     } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: 'Internal Server Error' });
+        res.status(500).json({ message: error._message });
     }
 };
 
@@ -81,13 +78,47 @@ controller.addMany = async (req, res) => {
             return;
         }
 
-        const insertedItems = await Item.insertMany(itemsToAdd);
-        const amount = insertedItems.length;
+        const existingItems = [];
+        const addedItems = [];
 
-        res.status(201).json({ message: 'Items added successfully', amount: amount, items: insertedItems });
+        for (const item of itemsToAdd) {
+            const { id, name, is_primitive, cost, production_time } = item;
+
+            // Check if the item with the same id already exists
+            const existingItem = await Item.findOne({ id });
+
+            if (existingItem) {
+                existingItems.push(existingItem);
+            } else {
+                // Create a new item using the Item model and add it to the database
+                const newItem = new Item({ id, name, is_primitive, cost, production_time });
+                await newItem.save();
+                addedItems.push(newItem);
+            }
+        }
+
+        if (addedItems.length === 0) {
+            res.status(409).json({ message: 'All items already exist' });
+            return;
+        } else if (existingItems.length === 0) {
+            res.status(201).json({ message: 'All items added successfully', items: addedItems });
+            return;
+        } else {
+            res.status(207).json({
+                message: 'Some items added successfully, some already existed',
+                added: {
+                    amount: amountAdded,
+                    items: addedItems,
+                },
+                existing: {
+                    amount: amountExisting,
+                    items: existingItems,
+                },
+            });
+            return;
+        }
     } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: 'Internal Server Error' });
+        res.status(500).json({ message: error._message });
     }
 };
 
@@ -95,12 +126,12 @@ controller.addMany = async (req, res) => {
 controller.fullUpdate = async (req, res) => {
     try {
         const itemId = req.params.id;
-        const { name, is_primitive, cost } = req.body;
+        const { name, is_primitive, cost, production_time } = req.body;
 
         // Find item by ID and update it with all the fields
         const updatedItem = await Item.findOneAndUpdate(
             { id: itemId },
-            { name, is_primitive, cost },
+            { name, is_primitive, cost, production_time },
         );
 
         if (!updatedItem) {
@@ -111,8 +142,7 @@ controller.fullUpdate = async (req, res) => {
         // Send response with updated item
         res.status(200).json({ message: 'Item updated successfully', item: updatedItem });
     } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: 'Internal Server Error' });
+        res.status(500).json({ message: error._message });
     }
 };
 
@@ -142,8 +172,7 @@ controller.partialUpdate = async (req, res) => {
         // Send response with old item
         res.status(200).json({ message: 'Item updated successfully', item: updatedItem });
     } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: 'Internal Server Error' });
+        res.status(500).json({ message: error._message });
     }
 };
 
@@ -159,8 +188,7 @@ controller.deleteOneByID = async (req, res) => {
         // Send response with deleted item
         res.status(200).json({ message: 'Item deleted successfully', item: deletedItem });
     } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: 'Internal Server Error' });
+        res.status(500).json({ message: error._message });
     }
 };
 
@@ -173,8 +201,7 @@ controller.deleteAll = async (req, res) => {
 
         res.status(200).json({ message: 'All items deleted successfully', timestamp: timestamp }); // Send response with deleted items
     } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: 'Internal Server Error' });
+        res.status(500).json({ message: error._message });
     }
 };
 
