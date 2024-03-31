@@ -1,0 +1,366 @@
+[
+    {
+        "id": 1,
+        "production_time": 1,
+        "name": "Metal",
+        "is_primitive": true,
+        "cost": [
+            {
+                "id": 1,
+                "name": "Metal",
+                "amount": 1
+            }
+        ]
+    },
+    {
+        "id": 2,
+        "production_time": 3,
+        "name": "Wood",
+        "is_primitive": true,
+        "cost": [
+            {
+                "id": 2,
+                "name": "Wood",
+                "amount": 1
+            }
+        ]
+    },
+    {
+        "id": 3,
+        "production_time": 9,
+        "name": "Plastic",
+        "is_primitive": true,
+        "cost": [
+            {
+                "id": 3,
+                "name": "Plastic",
+                "amount": 1
+            }
+        ]
+    },
+    {
+        "id": 4,
+        "production_time": 20,
+        "name": "Seeds",
+        "is_primitive": true,
+        "cost": [
+            {
+                "id": 4,
+                "name": "Seeds",
+                "amount": 1
+            }
+        ]
+    },
+    {
+        "id": 5,
+        "production_time": 30,
+        "name": "Minerals",
+        "is_primitive": true,
+        "cost": [
+            {
+                "id": 5,
+                "name": "Minerals",
+                "amount": 1
+            }
+        ]
+    },
+    {
+        "id": 6,
+        "production_time": 120,
+        "name": "Chemicals",
+        "is_primitive": true,
+        "cost": [
+            {
+                "id": 6,
+                "name": "Chemicals",
+                "amount": 1
+            }
+        ]
+    },
+    {
+        "id": 7,
+        "production_time": 180,
+        "name": "Textiles",
+        "is_primitive": true,
+        "cost": [
+            {
+                "id": 7,
+                "name": "Textiles",
+                "amount": 1
+            }
+        ]
+    },
+    {
+        "id": 8,
+        "production_time": 240,
+        "name": "Sugar and Spices",
+        "is_primitive": true,
+        "cost": [
+            {
+                "id": 8,
+                "name": "Sugar and Spices",
+                "amount": 1
+            }
+        ]
+    },
+    {
+        "id": 9,
+        "production_time": 300,
+        "name": "Glass",
+        "is_primitive": true,
+        "cost": [
+            {
+                "id": 9,
+                "name": "Glass",
+                "amount": 1
+            }
+        ]
+    },
+    {
+        "id": 10,
+        "production_time": 360,
+        "name": "Animal Feed",
+        "is_primitive": true,
+        "cost": [
+            {
+                "id": 10,
+                "name": "Animal Feed",
+                "amount": 1
+            }
+        ]
+    },
+    {
+        "id": 11,
+        "production_time": 420,
+        "name": "Electrical Components",
+        "is_primitive": true,
+        "cost": [
+            {
+                "id": 11,
+                "name": "Electrical Components",
+                "amount": 1
+            }
+        ]
+    },
+    {
+        "id": 12,
+        "production_time": 5,
+        "name": "Nails",
+        "is_primitive": false,
+        "cost": [
+            {
+                "id": 1,
+                "name": "Metal",
+                "amount": 2
+            }
+        ]
+    },
+    {
+        "id": 13,
+        "production_time": 30,
+        "name": "Planks",
+        "is_primitive": false,
+        "cost": [
+            {
+                "id": 2,
+                "name": "Wood",
+                "amount": 2
+            }
+        ]
+    },
+    {
+        "id": 14,
+        "production_time": 20,
+        "name": "Bricks",
+        "is_primitive": false,
+        "cost": [
+            {
+                "id": 5,
+                "name": "Minerals",
+                "amount": 2
+            }
+        ]
+    },
+    {
+        "id": 15,
+        "production_time": 50,
+        "name": "Cement",
+        "is_primitive": false,
+        "cost": [
+            {
+                "id": 5,
+                "name": "Minerals",
+                "amount": 2
+            },
+            {
+                "id": 6,
+                "name": "Chemicals",
+                "amount": 1
+            }
+        ]
+    },
+    {
+        "id": 16,
+        "production_time": 60,
+        "name": "Glue",
+        "is_primitive": false,
+        "cost": [
+            {
+                "id": 3,
+                "name": "Plastic",
+                "amount": 1
+            },
+            {
+                "id": 6,
+                "name": "Chemicals",
+                "amount": 2
+            }
+        ]
+    },
+    {
+        "id": 17,
+        "production_time": 60,
+        "name": "Paint",
+        "is_primitive": false,
+        "cost": [
+            {
+                "id": 1,
+                "name": "Metal",
+                "amount": 2
+            },
+            {
+                "id": 5,
+                "name": "Minerals",
+                "amount": 1
+            },
+            {
+                "id": 6,
+                "name": "Chemicals",
+                "amount": 2
+            }
+        ]
+    },
+    {
+        "id": 18,
+        "production_time": 14,
+        "name": "Hammer",
+        "is_primitive": false,
+        "cost": [
+            {
+                "id": 1,
+                "name": "Metal",
+                "amount": 1
+            },
+            {
+                "id": 2,
+                "name": "Wood",
+                "amount": 1
+            }
+        ]
+    },
+    {
+        "id": 19,
+        "production_time": 20,
+        "name": "Measuring Tape",
+        "is_primitive": false,
+        "cost": [
+            {
+                "id": 1,
+                "name": "Metal",
+                "amount": 1
+            },
+            {
+                "id": 3,
+                "name": "Plastic",
+                "amount": 1
+            }
+        ]
+    },
+    {
+        "id": 20,
+        "production_time": 30,
+        "name": "Shovel",
+        "is_primitive": false,
+        "cost": [
+            {
+                "id": 1,
+                "name": "Metal",
+                "amount": 1
+            },
+            {
+                "id": 2,
+                "name": "Wood",
+                "amount": 1
+            },
+            {
+                "id": 3,
+                "name": "Plastic",
+                "amount": 1
+            }
+        ]
+    },
+    {
+        "id": 21,
+        "production_time": 45,
+        "name": "Cooking Utensils",
+        "is_primitive": false,
+        "cost": [
+            {
+                "id": 1,
+                "name": "Metal",
+                "amount": 2
+            },
+            {
+                "id": 2,
+                "name": "Wood",
+                "amount": 2
+            },
+            {
+                "id": 3,
+                "name": "Plastic",
+                "amount": 2
+            }
+        ]
+    },
+    {
+        "id": 22,
+        "production_time": 60,
+        "name": "Ladder",
+        "is_primitive": false,
+        "cost": [
+            {
+                "id": 1,
+                "name": "Metal",
+                "amount": 2
+            },
+            {
+                "id": 13,
+                "name": "Planks",
+                "amount": 2
+            }
+        ]
+    },
+    {
+        "id": 23,
+        "production_time": 120,
+        "name": "Drill",
+        "is_primitive": false,
+        "cost": [
+            {
+                "id": 1,
+                "name": "Metal",
+                "amount": 2
+            },
+            {
+                "id": 6,
+                "name": "Plastic",
+                "amount": 2
+            },
+            {
+                "id": 11,
+                "name": "Electrical Components",
+                "amount": 1
+            }
+        ]
+    }
+]
