@@ -9,6 +9,6 @@ const RenderHomePage = (req, res, next) => res.render('index', { title: 'Express
 /* GET home page. */
 router.get('/', RenderHomePage);
 router.use('/items', itemsRouter);
-router.use('/item-cost', itemCostRouter);
+router.use('/items-cost', itemCostRouter);
 
 module.exports = router;

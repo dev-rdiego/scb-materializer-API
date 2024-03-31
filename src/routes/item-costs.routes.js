@@ -7,6 +7,6 @@ const controller = require('../controllers/ItemCost.controller');
 router.get('/:id', controller.getTotalCost);
 
 // GET: Get total cost of many items by their ID
-router.get('/', controller.getManyTotalCost);
+router.post('/', controller.getManyTotalCost);
 
 module.exports = router;

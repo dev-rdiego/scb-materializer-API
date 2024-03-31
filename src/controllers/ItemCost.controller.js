@@ -1,6 +1,6 @@
 // Import the necessary modules
 const Item = require('../models/Item.model');
-const { calculateTotalCost } = require('../utils');
+const { calculateTotalCost } = require('../services/ItemCost.service');
 
 // Define the controller object
 const controller = {};
@@ -26,7 +26,7 @@ controller.getTotalCost = async (req, res) => {
         res.status(200).json({
             name: item.name,
             rawMaterials: totalCost,
-            production_time: totalTime
+            totaProductionTime: totalTime
         });
     } catch (error) {
         console.error(error);
@@ -58,12 +58,12 @@ controller.getManyTotalCost = async (req, res) => {
             }
 
             // Calculate total cost and time recursively and await the result
-            const { totalCost, totalTime } = await calculateTotalCost(itemId, [], requestedAmount);
+            const { totalCost } = await calculateTotalCost(itemId, [], requestedAmount);
 
             totalCosts.push({
                 name: itemDetails.name,
+                requestedAmount,
                 rawMaterials: totalCost,
-                production_time: totalTime
             });
         }
 
