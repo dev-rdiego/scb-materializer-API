@@ -11,7 +11,7 @@ const { formatTime } = require('../utils');
  * @param {number} [desiredAmount=1] - The desired amount of the item to be crafted.
  * @returns {Object} An object containing the total cost and total production time.
  */
-const calculateTotalCost = async (itemId, result = [], desiredAmount = 1) => {
+const calculateTotalCost = async (itemId, result = [], desiredAmount = 1, includeTime = false) => {
     // Retrieve item information from the database
     const item = await Item.findOne({ id: itemId });
 
@@ -33,17 +33,70 @@ const calculateTotalCost = async (itemId, result = [], desiredAmount = 1) => {
 
         // If the found item is a primitive item, calculate its total amount and push it to the result array
         if (foundItem.is_primitive) {
-            result.push({ name: foundItem.name, amount: amount * desiredAmount });
+            includeTime
+                ?
+                result.push({ id: foundItem.id, name: foundItem.name, productionTime: foundItem.production_time, amount: amount * desiredAmount })
+                :
+                result.push({ id: foundItem.id, name: foundItem.name, amount: amount * desiredAmount });
             // If the found item is not a primitive item, recursively calculate its total cost
         } else {
-            await calculateTotalCost(id, result, amount * desiredAmount);
+            includeTime
+                ?
+                await calculateTotalCost(id, result, amount * desiredAmount, true)
+                :
+                await calculateTotalCost(id, result, amount * desiredAmount);
         }
     }
 
 
     // Return an object containing the total cost and total production time
-    return { totalCost: result };
+    return result;
 };
+
+
+const calculateTotalTime = (baseItem, desiredAmount, rawMaterials, storeLevel = 0, factoriesOwned = 1, factoryLimit = 2) => {
+    rawMaterials = [
+        {
+            "id": 1,
+            "name": "Metal",
+            "productionTime": 1,
+            "amount": 2
+        },
+        {
+            "id": 2,
+            "name": "Wood",
+            "productionTime": 3,
+            "amount": 4
+        }
+    ]
+
+    let timeReductionFactor;
+    let totalProductionTime = [];
+
+    switch (storeLevel) {
+        case 1:
+            timeReductionFactor = 0.9;
+            break;
+        case 2:
+            timeReductionFactor = 0.85;
+            break;
+        case 3:
+            timeReductionFactor = 0.8;
+            break;
+        default:
+            timeReductionFactor = 1;
+    }
+
+
+    rawMaterials.forEach((material, index) => {
+        totalProductionTime[index] = {
+            name: material.name,
+            productionTime: material.productionTime * material.amount * timeReductionFactor,
+        }
+    });
+
+    return totalProductionTime;
+}
 
 
 // Export the helper function

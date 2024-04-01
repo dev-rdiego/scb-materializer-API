@@ -10,6 +10,7 @@ controller.getTotalCost = async (req, res) => {
     try {
         const itemId = req.params.id;
         const desiredAmount = req.query.amount || 1;
+        const includeTime = req.query.time === 'true';
 
         // Find item by ID
         const item = await Item.findOne({ id: itemId });
@@ -20,13 +21,13 @@ controller.getTotalCost = async (req, res) => {
         }
 
         // Calculate total cost and time recursively and await the result
-        const { totalCost, totalTime } = await calculateTotalCost(item.id, [], desiredAmount);
+        const totalCost = await calculateTotalCost(item.id, [], desiredAmount);
 
         // Send response with total cost and time
         res.status(200).json({
             name: item.name,
+            totaProductionTime: 0, // Placeholder for total production time
             rawMaterials: totalCost,
-            totaProductionTime: totalTime
         });
     } catch (error) {
         console.error(error);
