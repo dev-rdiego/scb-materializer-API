@@ -18,7 +18,6 @@ The CRUD API is built using modern web technologies and frameworks, including:
 
 - **Node.js**: The server-side runtime for running the CRUD API application.
 - **Express**: A web application framework for Node.js, used to build robust and scalable APIs.
-- **TypeScript**: A superset of JavaScript that adds static typing to the language, enhancing code quality and developer productivity.
 - **MongoDB**: A NoSQL database for storing and managing data.
 - **Mongoose**: An elegant MongoDB object modeling tool for Node.js, providing a schema-based solution for interacting with MongoDB databases.
 
